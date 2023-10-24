@@ -66,8 +66,15 @@ function getFactorial(n) {
  *   5,10  =>  45 ( = 5+6+7+8+9+10 )
  *   -1,1  =>  0  ( = -1 + 0 + 1 )
  */
-function getSumBetweenNumbers(/* n1, n2 */) {
-  throw new Error('Not implemented');
+function getSumBetweenNumbers(n1, n2) {
+  let start = n1;
+  const end = n2;
+  let sum = 0;
+  while (start <= end) {
+    sum += start;
+    start += 1;
+  }
+  return sum;
 }
 
 
@@ -86,8 +93,8 @@ function getSumBetweenNumbers(/* n1, n2 */) {
  *   10,1,1   =>  false
  *   10,10,10 =>  true
  */
-function isTriangle(/* a, b, c */) {
-  throw new Error('Not implemented');
+function isTriangle(a, b, c) {
+  return a + b > c && a + c > b && b + c > a && a > 0 && b > 0 && c > 0;
 }
 
 
@@ -396,8 +403,8 @@ function isBracketsBalanced(str) {
  *    365, 4  => '11231'
  *    365, 10 => '365'
  */
-function toNaryString(/* num, n */) {
-  throw new Error('Not implemented');
+function toNaryString(num, n) {
+  return num.toString(n);
 }
 
 
@@ -413,8 +420,21 @@ function toNaryString(/* num, n */) {
  *   ['/web/assets/style.css', '/.bin/mocha',  '/read.me'] => '/'
  *   ['/web/favicon.ico', '/web-scripts/dump', '/verbalizer/logs'] => '/'
  */
-function getCommonDirectoryPath(/* pathes */) {
-  throw new Error('Not implemented');
+function getCommonDirectoryPath(pathes) {
+  if (pathes.length === 0) return '';
+  if (pathes.length === 1) return pathes[0];
+  let index = pathes[0].length;
+  for (let i = 1; i < pathes.length; i += 1) {
+    for (let b = 0; b < pathes[0].length; b += 1) {
+      if (pathes[0][b] !== pathes[i][b]) {
+        if (index > b) {
+          index = b;
+        }
+      }
+    }
+  }
+  const result = pathes[0].slice(0, index);
+  return result.slice(0, result.lastIndexOf('/') + 1);
 }
 
 
