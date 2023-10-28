@@ -291,12 +291,12 @@ function reverseInteger(num) {
  */
 function isCreditCardNumber(ccn) {
   const arr = ccn.toString(10).split('');
-  const checkDigit = +arr.pop();
+  /* const checkDigit = +arr.pop(); */
   arr.reverse();
   let x;
   let sum = 0;
-  for (let i = 0; i < arr.length - 1; i += 1) {
-    if (i % 2 === 0) {
+  for (let i = 0; i < arr.length; i += 1) {
+    if (i % 2 !== 0) {
       x = +arr[i] * 2;
       if (x > 9) {
         x -= 9;
@@ -306,7 +306,7 @@ function isCreditCardNumber(ccn) {
       sum += +arr[i];
     }
   }
-  return 10 - (sum % 10) === checkDigit;
+  return sum % 10 === 0;
 }
 
 
