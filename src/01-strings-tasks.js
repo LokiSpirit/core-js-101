@@ -203,8 +203,25 @@ function extractEmails(str) {
  *             '└──────────┘\n'
  *
  */
-function getRectangleString(/*  width, height */) {
-  throw new Error('Not implemented');
+function getRectangleString(width, height) {
+  if (width === 0 || height === 0) return '';
+  const START_TOP = '┌';
+  const END_TOP = '┐';
+  const WIDTH = '─';
+  const HIGHT = '│';
+  const START_FLOOR = '└';
+  const END_FLOOR = '┘';
+  const arr = [];
+  for (let y = 0; y < height; y += 1) {
+    if (y === 0) {
+      arr.push(`${START_TOP}${WIDTH.repeat(width - 2)}${END_TOP.concat('\n')}`);
+    } else if (y === height - 1) {
+      arr.push(`${START_FLOOR}${WIDTH.repeat(width - 2)}${END_FLOOR.concat('\n')}`);
+    } else {
+      arr.push(`${HIGHT}${' '.repeat(width - 2)}${HIGHT.concat('\n')}`);
+    }
+  }
+  return arr.join('');
 }
 
 
@@ -224,29 +241,20 @@ function getRectangleString(/*  width, height */) {
  *    => 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm'
  *
  */
-function encodeToRot13(/* str */) {
-/*  let codePointA = +'a'.codePointAt('0');
-  let codePointZ = +'z'.codePointAt('0');
-  let codePointUpperA = +'A'.codePointAt('0');
-  let codePointUpperZ = +'Z'.codePointAt('0');
-  let newStr = '';
-
-  for (let i of str) {
-    if (i >= 'A' && i <= 'Z') {
-      newStr += +i.codePointAt('0') + 13 > codePointUpperZ ?
-        String.fromCodePoint(codePointUpperA - 1 + i.codePointAt('0') + 13 - codePointUpperZ) :
-        String.fromCodePoint(i.codePointAt('0') + 13);
-    }
-    else if (i >= 'a' && i <= 'z') {
-      newStr += +i.codePointAt('0') + 13 > codePointZ ?
-        String.fromCodePoint(codePointA - 1 + i.codePointAt('0') + 13 - codePointZ) :
-        String.fromCodePoint(i.codePointAt('0') + 13);
+function encodeToRot13(str) {
+  const DIRECT = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+  const SHIFTED = 'NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm';
+  const arr = [];
+  let i = -1;
+  for (let s = 0; s < str.length; s += 1) {
+    i = DIRECT.indexOf(str[s]);
+    if (i !== -1) {
+      arr.push(SHIFTED[i]);
     } else {
-      newStr += i;
+      arr.push(str[s]);
     }
   }
-  return newStr; */
-  throw new Error('Not implemented');
+  return arr.join('');
 }
 
 /**
