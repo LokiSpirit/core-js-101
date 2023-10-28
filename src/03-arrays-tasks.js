@@ -334,8 +334,22 @@ function getPositivesCount(arr) {
  *   [ 'nine','eight','nine','eight'] => [ 'eight','eight','nine','nine']
  *   [ 'one','one','one','zero' ]     => [ 'zero','one','one','one' ]
  */
-function sortDigitNamesByNumericOrder(/* arr */) {
-  throw new Error('Not implemented');
+function sortDigitNamesByNumericOrder(arr) {
+  const numbers = {
+    zero: 0,
+    one: 1,
+    two: 2,
+    three: 3,
+    four: 4,
+    five: 5,
+    six: 6,
+    seven: 7,
+    eight: 8,
+    nine: 9,
+    ten: 10,
+  };
+  return arr.sort((item1, item2) => numbers[item1] - numbers[item2]);
+  /* throw new Error('Not implemented'); */
 }
 
 /**
@@ -491,8 +505,16 @@ function getIdentityMatrix(n) {
  *     0, 100 => [ 0, 1, 2, ..., 100 ]
  *     3, 3   => [ 3 ]
  */
-function getIntervalArray(/* start, end */) {
-  throw new Error('Not implemented');
+function getIntervalArray(start, end) {
+  const interval = end - start + 1;
+  const arr = new Array(interval);
+  arr.fill(start, 0);
+  let i = 0;
+  return arr.map((item) => {
+    const result = item + i;
+    i += 1;
+    return result;
+  });
 }
 
 /**
@@ -540,8 +562,17 @@ function distinct(arr) {
  *    "Poland" => ["Lodz"]
  *   }
  */
-function group(/* array, keySelector, valueSelector */) {
-  throw new Error('Not implemented');
+function group(array, keySelector, valueSelector) {
+  const map = new Map();
+  return array.reduce((m, item) => {
+    const key = keySelector(item);
+    if (!m.has(key)) {
+      m.set(key, []);
+    }
+    m.get(key).push(valueSelector(item));
+    return m;
+  }, map);
+  /* throw new Error('Not implemented'); */
 }
 
 
@@ -575,9 +606,9 @@ function selectMany(arr, childrenSelector) {
  *   ['one','two','three'], [2]       => 'three'  (arr[2])
  *   [[[ 1, 2, 3]]], [ 0, 0, 1 ]      => 2        (arr[0][0][1])
  */
-function getElementByIndexes(/* arr, indexes */) {
-  /* return indexes.reduce((result, item) => result[item], arr); */
-  throw new Error('Not implemented');
+function getElementByIndexes(arr, indexes) {
+  return indexes.reduce((result, item) => result[item], arr);
+  /* throw new Error('Not implemented'); */
 }
 
 
