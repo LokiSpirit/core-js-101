@@ -134,8 +134,11 @@ function isTriangle(a, b, c) {
  *   { top:20, left:20, width: 20, height: 20 }    =>  false
  *
  */
-function doRectanglesOverlap(/* rect1, rect2 */) {
-  throw new Error('Not implemented');
+function doRectanglesOverlap(rect1, rect2) {
+  return rect1.top < rect2.top ? ((rect1.top + rect1.height) > rect2.top
+    && (rect1.left + rect1.width) > rect2.left)
+    : ((rect2.top + rect2.height) > rect1.top
+    && (rect2.left + rect2.width) > rect1.left);
 }
 
 
@@ -165,8 +168,9 @@ function doRectanglesOverlap(/* rect1, rect2 */) {
  *   { center: { x:0, y:0 }, radius:10 },  { x:10, y:10 }   => false
  *
  */
-function isInsideCircle(/* circle, point */) {
-  throw new Error('Not implemented');
+function isInsideCircle(circle, point) {
+  return (point.x - circle.center.x) * (point.x - circle.center.x)
+    + (point.y - circle.center.y) * (point.y - circle.center.y) < circle.radius * circle.radius;
 }
 
 
@@ -460,8 +464,20 @@ function getCommonDirectoryPath(pathes) {
  *                         [ 6 ]]
  *
  */
-function getMatrixProduct(/* m1, m2 */) {
-  throw new Error('Not implemented');
+function getMatrixProduct(m1, m2) {
+  const array = [];
+  for (let k = 0; k < m1.length; k += 1) {
+    const res = [];
+    for (let i = 0; i < m1.length; i += 1) {
+      let prod = 0;
+      for (let y = 0; y < m2.length; y += 1) {
+        prod += m1[k][y] * m2[y][i];
+      }
+      res.push(prod);
+    }
+    array.push(res);
+  }
+  return array;
 }
 
 
@@ -495,8 +511,39 @@ function getMatrixProduct(/* m1, m2 */) {
  *    [    ,   ,    ]]
  *
  */
-function evaluateTicTacToePosition(/* position */) {
-  throw new Error('Not implemented');
+function evaluateTicTacToePosition(position) {
+  const len = position.length;
+  let countXHor;
+  let countXVer;
+  let countYHor;
+  let countYVer;
+  for (let i = 0; i < len; i += 1) {
+    countXHor = 0;
+    countXVer = 0;
+    countYHor = 0;
+    countYVer = 0;
+    for (let y = 0; y < len; y += 1) {
+      countXHor += position[i][y] === 'X' ? 1 : 0;
+      countXVer += position[y][i] === 'X' ? 1 : 0;
+      countYHor += position[i][y] === '0' ? 1 : 0;
+      countYVer += position[y][i] === '0' ? 1 : 0;
+    }
+    if (countXHor === 3 || countXVer === 3) return 'X';
+    if (countYHor === 3 || countYVer === 3) return '0';
+  }
+  let countXDiagDown = 0;
+  let countXDiagUp = 0;
+  let countYDiagDown = 0;
+  let countYDiagUp = 0;
+  for (let y = 0; y < len; y += 1) {
+    countXDiagDown += position[y][y] === 'X' ? 1 : 0;
+    countXDiagUp += position[y][len - 1 - y] === 'X' ? 1 : 0;
+    countYDiagDown += position[y][y] === '0' ? 1 : 0;
+    countYDiagUp += position[y][len - 1 - y] === '0' ? 1 : 0;
+  }
+  if (countXDiagDown === 3 || countXDiagUp === 3) return 'X';
+  if (countYDiagDown === 3 || countYDiagUp === 3) return '0';
+  return undefined;
 }
 
 
